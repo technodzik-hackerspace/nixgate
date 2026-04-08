@@ -1,0 +1,4 @@
+hosts/nixgate/hosts.nix filter=git-crypt diff=git-crypt
+hosts/nixgate/default.nix filter=git-crypt diff=git-crypt
+hosts/nixgate/services/dnsmasq.nix filter=git-crypt diff=git-crypt
+hosts/nixgate/services/adguardhome.nix filter=git-crypt diff=git-crypt
