@@ -2,6 +2,10 @@
 
 let
   cfg = config.nixgate.network;
+  hosts = import ../hosts.nix;
+
+  fullAccessIPs = map (h: h.ip) (builtins.filter (h: h.acl == "full") hosts);
+  allowListGroups = builtins.filter (h: h.acl != "full" && h.acl != "lan") hosts;
 in
 {
   options.nixgate.network = {
