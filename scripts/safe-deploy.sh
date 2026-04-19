@@ -7,7 +7,8 @@
 
 set -euo pipefail
 
-TARGET="${1:-192.168.42.42}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TARGET="${1:-$(nix eval --raw --file "$SCRIPT_DIR/../hosts/nixgate/secrets/config.nix" gatewayAddress)}"
 TIMEOUT="${2:-60}"
 
 echo "==> Building and applying configuration in TEST mode..."

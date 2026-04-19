@@ -10,7 +10,9 @@
     };
   };
 
-  outputs = { self, nixpkgs, disko, ... }: {
+  outputs = { self, nixpkgs, disko, ... }: let
+    conf = import ./hosts/nixgate/secrets/config.nix;
+  in {
     nixosConfigurations.nixgate = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -26,7 +28,7 @@
 
       nixgate = { name, nodes, pkgs, ... }: {
         deployment = {
-          targetHost = "192.168.42.42";
+          targetHost = conf.gatewayAddress;
           targetUser = "root";
         };
 

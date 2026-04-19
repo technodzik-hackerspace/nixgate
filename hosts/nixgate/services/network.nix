@@ -2,10 +2,7 @@
 
 let
   cfg = config.nixgate.network;
-  hosts = import ../hosts.nix;
-
-  fullAccessIPs = map (h: h.ip) (builtins.filter (h: h.acl == "full") hosts);
-  allowListGroups = builtins.filter (h: h.acl != "full" && h.acl != "lan") hosts;
+  conf = import ../secrets/config.nix;
 in
 {
   options.nixgate.network = {
@@ -23,7 +20,7 @@ in
 
     lanAddress = lib.mkOption {
       type = lib.types.str;
-      default = "192.168.42.42";
+      default = conf.gatewayAddress;
       description = "Static IP address for the LAN interface";
     };
 
@@ -60,7 +57,7 @@ in
 
       firewall = {
         enable = true;
-        allowedTCPPorts = [ 22 53 3000 ];
+        allowedTCPPorts = [ 22 53 ];
         allowedUDPPorts = [ 53 67 68 ];
       };
     };

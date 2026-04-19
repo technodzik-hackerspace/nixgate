@@ -2,7 +2,7 @@
 
 let
   cfg = config.nixgate.network;
-  hosts = import ../hosts.nix;
+  hosts = import ../secrets/hosts.nix;
 
   byAcl = group: builtins.filter (h: h.acl == group) hosts;
   ipsFor = group: map (h: h.ip) (byAcl group);
