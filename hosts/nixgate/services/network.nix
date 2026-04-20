@@ -34,6 +34,9 @@ in
   config = {
     boot.kernel.sysctl."net.ipv4.ip_forward" = "1";
 
+    # Don't block boot waiting for WAN DHCP — LAN services can start immediately
+    systemd.network.wait-online.anyInterface = true;
+
     networking = {
       nftables.enable = true;
       useDHCP = false;
