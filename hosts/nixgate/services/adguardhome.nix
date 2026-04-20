@@ -61,7 +61,8 @@ in
   systemd.services.adguardhome.preStart = lib.mkAfter ''
     DATA_DIR="/var/lib/AdGuardHome/data"
     mkdir -p "$DATA_DIR"
-    cp ${leasesJson} "$DATA_DIR/leases.json"
+    cp --force ${leasesJson} "$DATA_DIR/leases.json"
+    chmod 644 "$DATA_DIR/leases.json"
   '';
 
   services.resolved.enable = false;
