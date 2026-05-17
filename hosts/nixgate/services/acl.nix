@@ -10,7 +10,7 @@ in
 {
   options.nixgate.network.aclEnabled = lib.mkOption {
     type = lib.types.bool;
-    default = true;
+    default = false;
     description = "Enable per-device ACL firewall rules. When false, all devices get full internet access.";
   };
 
