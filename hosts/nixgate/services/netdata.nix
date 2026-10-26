@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, netdataPkgs, ... }:
 # Netdata metrics for nixgate, streamed over Tailscale to a Netdata parent
 # (dashboard there). No local web server.
 #
@@ -16,6 +16,9 @@ in
 {
   services.netdata = {
     enable = true;
+    # From the separate nixpkgs-netdata flake input (see flake.nix), so the
+    # agent can be kept current without moving the whole gateway.
+    package = netdataPkgs.netdata;
     enableAnalyticsReporting = false;
     config = {
       web.mode = "none";

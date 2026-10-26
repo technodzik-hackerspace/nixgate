@@ -8,15 +8,22 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Netdata only (services/netdata.nix): the parent nags about outdated
+    # agents, and bumping the main nixpkgs moves the whole gateway. Update
+    # just this with `nix flake update nixpkgs-netdata`.
+    nixpkgs-netdata.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixpkgs, disko, ... }: let
+  outputs = { self, nixpkgs, disko, nixpkgs-netdata, ... }: let
     conf = import ./hosts/nixgate/secrets/config.nix;
+    netdataPkgs = { _module.args.netdataPkgs = import nixpkgs-netdata { system = "x86_64-linux"; }; };
   in {
     nixosConfigurations.nixgate = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         disko.nixosModules.disko
+        netdataPkgs
         ./hosts/nixgate
       ];
     };
@@ -34,6 +41,7 @@
 
         imports = [
           disko.nixosModules.disko
+          netdataPkgs
           ./hosts/nixgate
         ];
       };
