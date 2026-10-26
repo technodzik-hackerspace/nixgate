@@ -9,6 +9,7 @@
     ./services/acl.nix
     ./services/adguardhome.nix
     ./services/dnsmasq.nix
+    ./services/netdata.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
