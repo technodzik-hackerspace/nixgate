@@ -10,9 +10,10 @@
     };
 
     # Netdata only (services/netdata.nix): the parent nags about outdated
-    # agents, and bumping the main nixpkgs moves the whole gateway. Update
-    # just this with `nix flake update nixpkgs-netdata`.
-    nixpkgs-netdata.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # agents, and bumping the main nixpkgs moves the whole gateway. Pinned to
+    # a nixpkgs master commit whose netdata is in cache.nixos.org (channels lag);
+    # same pin as ~/git/fl and ~/git/nixie — bump the rev in all three.
+    nixpkgs-netdata.url = "github:NixOS/nixpkgs/39e1731dcac1f235c7aec665556d4ace5a1fa7fd";
   };
 
   outputs = { self, nixpkgs, disko, nixpkgs-netdata, ... }: let
